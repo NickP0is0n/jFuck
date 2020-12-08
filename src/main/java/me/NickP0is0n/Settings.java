@@ -11,8 +11,15 @@ public class Settings implements Serializable {
     @Option(name = "--ook", usage = "Set OOK as programming language", required = false)
     private boolean isOOK = false;
 
+    @Option(name = "--hd9", usage = "Set HQ9(++/+-) as programming language", required = false)
+    private boolean isHQ9 = false;
+
     boolean isOOK() {
         return isOOK;
+    }
+
+    boolean isHQ9() {
+        return isHQ9;
     }
 
     String getFileName() {

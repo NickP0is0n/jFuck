@@ -7,20 +7,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-class BrainfuckInterpreter {
+class BrainfuckInterpreter implements Interpreter {
     File sourceFile;
     String code;
 
     BrainfuckInterpreter(File sourceFile) throws IOException {
         this.sourceFile = sourceFile;
-        this.code = readFile();
+        this.code = FileUtils.readFile(sourceFile);
     }
 
-    BrainfuckInterpreter() {
-    }
-
-    @SuppressWarnings("Duplicates")
-    void execute() throws IOException {
+    public void execute() {
         int j = 0;
         byte[] cpu = new byte[30000];
         for (byte i: cpu) {
@@ -65,12 +61,6 @@ class BrainfuckInterpreter {
                 }
             }
         }
-    }
-
-    String readFile() throws IOException
-    {
-        byte[] encoded = Files.readAllBytes(Paths.get(sourceFile.getPath()));
-        return new String(encoded, StandardCharsets.UTF_8);
     }
 
     private char[] parseCode(String code)

@@ -6,20 +6,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class OokInterpreter extends BrainfuckInterpreter {
+public class OokInterpreter implements Interpreter {
+    File sourceFile;
 
     OokInterpreter(File sourceFile) throws IOException {
-        super.sourceFile = sourceFile;
-        super.code = readFile();
+        this.sourceFile = sourceFile;
     }
 
     @Override
     @SuppressWarnings("Duplicates")
-    void execute() throws IOException {
+    public void execute() {
         int j = 0;
         byte[] cpu = new byte[30000];
         for (byte i: cpu) { i = 0; }
-        String[] acc = parseCode(code);
+        String[] acc = new String[0];
+        try {
+            acc = parseCode();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         int brc = 0;
         var in = new Scanner(System.in);
         for (int i = 0; i < acc.length; i++) {
@@ -57,7 +62,7 @@ public class OokInterpreter extends BrainfuckInterpreter {
         }
     }
 
-    private String[] parseCode(String code) throws FileNotFoundException {
+    private String[] parseCode() throws FileNotFoundException {
         int position = 0;
         var in = new Scanner(sourceFile);
         ArrayList<String> codeParts = new ArrayList<>();

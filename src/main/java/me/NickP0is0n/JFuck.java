@@ -18,22 +18,25 @@ public class JFuck {
             parser.printUsage(System.out);
             System.exit(1);
         }
-        System.out.println("jFuck v1.1");
-        System.out.println("Java open-source Brainfuck/Ook! interpreter");
-        System.out.println("By NickP0is0n (nickp0is0n.me)");
+        System.out.println("jFuck v1.2");
+        System.out.println("Java open-source esoteric language interpreter");
+        System.out.println("By Mykola Chaikovskyi (github.com/NickP0is0n)");
         System.out.println(" ");
         System.out.println("Program started");
         System.out.println(" ");
-        if (settings.isOOK())
-        {
-            OokInterpreter sourceCode = new OokInterpreter(new File(settings.getFileName()));
-            sourceCode.execute();
+
+        Interpreter interpreter = null;
+        if (settings.isOOK()) {
+            interpreter = new OokInterpreter(new File(settings.getFileName()));
         }
-        else
-        {
-            BrainfuckInterpreter sourceCode = new BrainfuckInterpreter(new File(settings.getFileName()));
-            sourceCode.execute();
+        else if (settings.isHQ9()) {
+            interpreter = new HQ9Interpreter(new File(settings.getFileName()));
         }
+        else {
+            interpreter = new BrainfuckInterpreter(new File(settings.getFileName()));
+        }
+        interpreter.execute();
+
         System.out.println(" ");
         System.out.println("Program finished");
     }
